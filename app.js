@@ -19,13 +19,6 @@ var fcm = require('fcm-notification');
 var FCM = new fcm('private-key.json');
 
 app.get("/", function (req, res) {
-    // FCM.send(message, function (err, response) {
-    //     if (err) {
-    //         console.log('error found', err);
-    //     } else {
-    //         console.log('response here', response);
-    //     }
-    // });
     res.send("It's working fine!");
 });
 
