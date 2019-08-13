@@ -1,8 +1,8 @@
 var express = require("express"),
     router = express.Router(),
+    Leaderboard = require("../models/leaderboardModel.js"),
     School = require("../models/schoolModel.js");
 
-//Add school
 router.post("/school", function (req, res) {
     School.create(req.body, function (err, school) {
         if (err) {
@@ -10,14 +10,23 @@ router.post("/school", function (req, res) {
         }
         else {
             console.log(school);
+            Leaderboard.create({
+                school: school["_id"],
+                score: 0
+            }, function (err, leaderboard) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log(leaderboard);
+                }
+            });
             res.send(school);
         }
     });
 });
 
-//Filter all schools
 router.get("/school", function (req, res) {
-    School.find(req.body, function (err, school) {
+    School.find(req.query, function (err, school) {
         if (err) {
             console.log(err);
         }
@@ -27,9 +36,9 @@ router.get("/school", function (req, res) {
     });
 });
 
-//Get school by id
-router.get("/school/id", function (req, res) {
-    School.findOne(req.body, function (err, school) {
+router.get("/school/:schoolName", function (req, res) {
+    console.log(req.params);
+    School.findOne(req.params, function (err, school) {
         if (err) {
             console.log(err);
         }
@@ -41,10 +50,10 @@ router.get("/school/id", function (req, res) {
 
 router.put("/school", function (req, res) {
     console.log(req.body);
-    var update = req.body;
-    var id = req.body.id;
-    delete update.id;
-    School.findOneAndUpdate(id, { $set: update }, { new: true }, function (err, newSchool) {
+    var item = req.body.id;
+    var update = req.body.update;
+    delete update.id
+    School.findOneAndUpdate(item, { $set: update }, { new: true }, function (err, newSchool) {
         if (err) {
             console.log(err);
         }

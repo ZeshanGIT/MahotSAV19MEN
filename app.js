@@ -2,22 +2,37 @@ var app = require("express")(),
     bodyParser = require("body-parser"),
     mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost/gs");
-
+// mongoose.connect("mongodb+srv://zesh:kply1967*@cluster0-bgqw9.mongodb.net/m19?retryWrites=true&w=majority");
+mongoose.connect("mongodb://localhost/m19");
 app.use(bodyParser.json());
 
 app.use(require("./routes/schoolRoutes.js"));
-app.use(require("./routes/teamRoutes.js"));
-app.use(require("./routes/eventRoutes.js"));
+app.use(require("./routes/leaderboardRoutes.js"));
+// app.use(require("./routes/tokenRoutes.js"));
+// app.use(require("./routes/leaderboardRoutes.js"));
+app.use(require("./routes/prizeRoutes.js"));
 
 //Base Route
+
+
+var fcm = require('fcm-notification');
+var FCM = new fcm('private-key.json');
+
 app.get("/", function (req, res) {
+    // FCM.send(message, function (err, response) {
+    //     if (err) {
+    //         console.log('error found', err);
+    //     } else {
+    //         console.log('response here', response);
+    //     }
+    // });
     res.send("It's working fine!");
 });
 
-app.post("/test", function (req, res) {
-    console.log(req.body.asdf);
-    res.send(req.body);
+app.get("/test", function (req, res) {
+    var body = JSON.parse(req.query.body || "{}");
+    console.log(body);
+    res.send(body);
 });
 
 app.listen(2222, "localhost", function () {
