@@ -2,7 +2,7 @@ var app = require("express")(),
     bodyParser = require("body-parser"),
     mongoose = require("mongoose");
 
-mongoose.connect("mongodb+srv://zesh:kply1967*@cluster0-bgqw9.mongodb.net/m19?retryWrites=true&w=majority");
+mongoose.connect("mongodb+srv://zesh:kply1967*@cluster0-bgqw9.mongodb.net/test?retryWrites=true&w=majority");
 //mongoose.connect("mongodb://localhost/m19");
 app.use(bodyParser.json());
 
