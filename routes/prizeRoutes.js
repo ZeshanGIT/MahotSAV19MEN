@@ -83,7 +83,6 @@ router.delete("/prize", function (req, res) {
                     res.send(leaderboard);
                 }
             });
-            // res.send(prize);
         }
     });
 });
